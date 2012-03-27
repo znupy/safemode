@@ -23,7 +23,7 @@ module Safemode
     end
     
     def core_jail_methods(klass)
-      (@@methods_whitelist[klass.name] + (@@default_methods & klass.instance_methods)).map{|n| n.to_sym }
+      @@methods_whitelist[klass.name] + (@@default_methods & klass.instance_methods)
     end
   end
   
