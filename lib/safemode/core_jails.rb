@@ -2,8 +2,7 @@ module Safemode
   class << self
     def define_core_jail_classes        
       core_classes.each do |klass|
-        m = *core_jail_methods(klass).uniq
-        define_jail_class(klass).allow m.map(&:to_sym)
+        define_jail_class(klass).allow *core_jail_methods(klass).uniq
       end
     end
   
@@ -23,7 +22,7 @@ module Safemode
     end
     
     def core_jail_methods(klass)
-      @@methods_whitelist[klass.name] + (@@default_methods & klass.instance_methods)
+      @@methods_whitelist[klass.name].map(&:to_sym) + (@@default_methods.map(&:to_sym) & klass.instance_methods)
     end
   end
   
